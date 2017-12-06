@@ -1,0 +1,200 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "Mifort-calendar API",
+    "version": "1.0.0",
+    "title": "Mifort-calendar API"
+  },
+  "paths": {
+    "/app/getCurrentMonth": {
+      "post": {
+        "tags": [
+          "api"
+        ],
+        "summary": "Get current month",
+        "description": "Creates or finds the current month in database.",
+        "operationId": "getCurrentMonth",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Current date",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/CurrentDate"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/Month"
+            }
+          }
+        }
+      }
+    },
+    "/app/addEvent": {
+      "post": {
+        "tags": [
+          "api"
+        ],
+        "summary": "add event for a day",
+        "description": "adds an event to the selected day.",
+        "operationId": "addEvent",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Current date & event",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/CurrentDateAndEvent"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/Month"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "CurrentDateAndEvent": {
+      "type": "object",
+      "properties": {
+        "date": {
+          "type": "object",
+          "properties": {
+            "day": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 31
+            },
+            "month": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 12
+            },
+            "year": {
+              "type": "integer"
+            }
+          }
+        },
+        "event": {
+          "type": "object",
+          "properties": {
+            "eventType": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "narrator": {
+              "type": "string"
+            },
+            "time": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "CurrentDate": {
+      "type": "object",
+      "properties": {
+        "currentMonth": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 12
+        },
+        "currentYear": {
+          "type": "integer"
+        }
+      }
+    },
+    "Events": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/Event"
+      }
+    },
+    "Event": {
+      "type": "object",
+      "properties": {
+        "eventType": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "narrator": {
+          "type": "string"
+        },
+        "time": {
+          "type": "string"
+        }
+      }
+    },
+    "Day": {
+      "type": "object",
+      "properties": {
+        "dayOfMonth": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 12
+        },
+        "dayOfWeek": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 7
+        },
+        "event": {
+          "$ref": "#/definitions/Events"
+        }
+      }
+    },
+    "Days": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/Day"
+      }
+    },
+    "Date": {
+      "type": "object",
+      "properties": {
+        "month": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 12
+        },
+        "year": {
+          "type": "integer"
+        }
+      }
+    },
+    "Month": {
+      "type": "object",
+      "properties": {
+        "date": {
+          "$ref": "#/definitions/Date"
+        },
+        "days": {
+          "$ref": "#/definitions/Days"
+        }
+      }
+    }
+  }
+}
